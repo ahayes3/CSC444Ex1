@@ -1,0 +1,25 @@
+S->Assign EOL | Query EOL
+Assign -> ID EQ Exp
+Query -> ID QMARK
+Exp -> Exp AND Exp | A
+A -> Exp OR Exp | B
+B -> Exp XOR Exp | C
+C -> NOT Exp | D
+D -> LP Exp RP | E
+E -> ID | F
+F -> TRUE | FALSE
+
+S -> S' EOL
+S' -> Assign | Query
+Assign -> ID EQ Exp
+Query -> ID QMARK
+Exp -> A Exp'
+Exp' -> AND A Exp' | e
+A -> B A'
+A' -> OR B A' | e
+B -> C B'
+B' -> XOR C B' | e
+C -> NOT D | D
+D -> LP Exp RP | E
+E -> ID | F
+F -> TRUE | FALSE 
