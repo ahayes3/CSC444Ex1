@@ -12,14 +12,14 @@ class Parser(l: Lex) {
   def S(): Boolean = {
     val r = Sp()
     if (lex.matchChar(Lex.EOL) == 0)
-      throw new ParseError
+      throw new ParseError("Expected EOL")
     r
   }
   
   def Sp(): Boolean = {
     val a = lex.matchChar('L')
     if (a == 0)
-      throw new ParseError
+      throw new ParseError("Expected id")
     val r =
       if (lex.matchChar('?') != 0) {
         Query(a)
@@ -27,7 +27,7 @@ class Parser(l: Lex) {
       else if (lex.matchChar('=') != 0) {
         Assign(a)
       }
-      else throw new ParseError
+      else throw new ParseError("Expected query or assignment operator")
     r
   }
   
@@ -88,8 +88,8 @@ class Parser(l: Lex) {
   def D(): Boolean = {
     if(lex.matchChar('(')!= 0) {
       val a = Exp()
-      if(lex.matchChar(')')!= 0)
-        throw new ParseError
+      if(lex.matchChar(')')== 0)
+        throw new ParseError("Expected )")
       a
     }
     else
@@ -101,7 +101,7 @@ class Parser(l: Lex) {
     else if ((lex.check('1')!= 0) || (lex.check('0')!= 0))
       F()
     else
-      throw new ParseError
+      throw new ParseError("Expected expression")
   }
   
   def F(): Boolean = {
@@ -110,7 +110,7 @@ class Parser(l: Lex) {
     else if(lex.matchChar('0')!= 0)
       false
     else
-      throw new ParseError
+      throw new ParseError("Expected literal")
     
   }
   def toId(id: Char): Int = {

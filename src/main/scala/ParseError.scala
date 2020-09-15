@@ -1,3 +1,1 @@
-class ParseError extends Exception {
-  
-}
+class ParseError(str:String) extends Exception(str) {}

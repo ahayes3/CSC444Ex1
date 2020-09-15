@@ -29,11 +29,13 @@ class Lex {
           token = yytext
         else if (Lex.ID.matches(yytext.toString))
           token = LIT
+        else if (yytext == ' ')
+          next()
         else
           println("Unexpected character: " + yytext)
       }
     } catch {
-      case e: IOException => throw new ParseError()
+      case e: IOException => throw new ParseError("Unexpected character")
     }
   }
 
