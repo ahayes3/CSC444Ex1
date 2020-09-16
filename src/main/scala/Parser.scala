@@ -40,42 +40,41 @@ class Parser(l: Lex) {
     vals(toId(id)) = Exp()
     vals(toId(id))
   }
-  
   def Exp(): Boolean = {
+    val r = B()
+    r | Ap()
+  }
+  
+  def Expp(): Boolean = {
+    if(lex.matchChar('|')!=0)
+      B() | Ap()
+    else
+      false //Doesn't change value when ORed
+  }
+  def A(): Boolean = {
+    val r = C()
+    r ^ Bp()
+  }
+  
+  def Ap(): Boolean = {
+    if(lex.matchChar('^')!= 0)
+      C() ^ Bp()
+    else
+      false //Same as above
+  }
+  def B(): Boolean = {
     val r = A()
     r & Expp()
   }
   
-  def Expp(): Boolean = {
+  def Bp(): Boolean = {
     if(lex.matchChar('&')!=0)
       A() & Expp()
     else
       true //preserves value when ANDed
   }
   
-  def A(): Boolean = {
-    val r = B()
-    r | Ap()
-  }
   
-  def Ap(): Boolean = {
-    if(lex.matchChar('|')!=0)
-      B() | Ap()
-    else
-      false //Doesn't change value when ORed
-  }
-  
-  def B(): Boolean = {
-    val r = C()
-    r ^ Bp()
-  }
-  
-  def Bp(): Boolean = {
-    if(lex.matchChar('^')!= 0)
-     C() ^ Bp()
-    else
-      false //Same as above
-  }
   
   def C(): Boolean = {
     if(lex.matchChar('~')!= 0)

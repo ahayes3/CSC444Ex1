@@ -23,3 +23,18 @@ C -> NOT D | D
 D -> LP Exp RP | E
 E -> ID | F
 F -> TRUE | FALSE 
+
+S -> S' EOL
+S' -> Assign | Query
+Assign -> ID EQ Exp
+Query -> ID QMARK
+Exp -> A Exp'
+Exp' -> OR A Exp' | e
+A -> B A'
+A' -> AND B A' | e
+B -> C B'
+B' -> XOR C B' | e
+C -> NOT D | D
+D -> LP Exp RP | E
+E -> ID | F
+F -> TRUE | FALSE
