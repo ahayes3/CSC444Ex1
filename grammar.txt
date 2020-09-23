@@ -38,3 +38,6 @@ C -> NOT D | D
 D -> LP Exp RP | E
 E -> ID | F
 F -> TRUE | FALSE
+
+First: {ID}
+Follows: {EQ, QMARK, AND, XOR, NOT, LP, RP, TRUE FALSE}
